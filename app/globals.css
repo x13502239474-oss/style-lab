@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cream: #f7f5f0;
+  --color-paper: #ffffff;
+  --color-ink: #252525;
+  --color-muted: #858078;
+  --color-olive: #89917b;
+  --color-sand: #e9e3d9;
+  --shell-width: 480px;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #ece8e0;
+  color: var(--color-ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-olive);
+  color: #ffffff;
+}
+
+/* 手机端满宽，桌面端呈现为一本居中的杂志 */
+.app-shell {
+  width: 100%;
+  max-width: var(--shell-width);
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+  background-color: var(--color-cream);
+  box-shadow: 0 0 60px rgba(37, 37, 37, 0.06);
+  position: relative;
+  overflow-x: hidden;
+}
+
+@layer components {
+  /* 杂志式英文小标签 */
+  .editorial-label {
+    @apply font-sans text-[10px] uppercase tracking-editorial text-muted;
+  }
+
+  /* 杂志式衬线大标题 */
+  .editorial-title {
+    @apply font-serif font-normal text-ink;
+  }
+
+  /* 细线分隔，替代卡片阴影 */
+  .hairline {
+    border-top: 1px solid var(--color-sand);
+  }
+
+  .hairline-bottom {
+    border-bottom: 1px solid var(--color-sand);
+  }
+
+  /* 主要行动按钮：克制、无渐变 */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-ink text-white px-7 py-4
+           font-sans text-[13px] tracking-[0.12em] transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    background-color: #3a3a3a;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.985);
+  }
+
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-olive);
+    outline-offset: 3px;
+  }
+
+  /* 次要按钮 */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 border border-ink text-ink
+           bg-transparent px-6 py-3 font-sans text-[12px] tracking-[0.1em]
+           transition-all duration-300;
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-ink);
+    color: #ffffff;
+  }
+
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--color-olive);
+    outline-offset: 3px;
+  }
+
+  /* 图片容器：统一裁切比例 */
+  .magazine-image {
+    @apply relative overflow-hidden bg-sand;
+  }
+
+  .magazine-image img {
+    @apply h-full w-full object-cover;
+  }
+}
+
+/* ---------- 微交互动画 ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.delay-1 { animation-delay: 80ms; }
+.delay-2 { animation-delay: 160ms; }
+.delay-3 { animation-delay: 240ms; }
+.delay-4 { animation-delay: 320ms; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-sand) 25%,
+    #f4f0e8 50%,
+    var(--color-sand) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.float-soft {
+  animation: floatSoft 5s ease-in-out infinite;
+}
+
+/* 尊重减少动态效果的系统偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 隐藏滚动条但保留滚动能力 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
